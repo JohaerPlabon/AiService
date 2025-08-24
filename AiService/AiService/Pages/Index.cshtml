@@ -1,0 +1,17 @@
+﻿@page
+@model IndexModel
+
+@{
+    ViewData["Title"] = "Home";
+}
+<div class="text-center">
+    <h1 class="display-5">Welcome</h1>
+    <p class="lead">Local signup, Google sign-in, and Guest access.</p>
+    <div class="d-flex justify-content-center gap-2">
+        <a class="btn btn-primary" href="/Account/Register">Sign up</a>
+        <a class="btn btn-outline-secondary" href="/Account/Login">Sign in</a>
+        <form method="post" action="/Account/GuestLogin">
+            <button class="btn btn-warning">Continue as Guest</button>
+        </form>
+    </div>
+</div>
