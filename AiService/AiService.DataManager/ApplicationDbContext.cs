@@ -1,18 +1,16 @@
 ﻿using AiService.Model;
+using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
 using System.Collections.Generic;
 
 namespace AiService.DataManager
 {
-    public class ApplicationDbContext
+    public class ApplicationDbContext : DbContext
     {
-        public class ApplicationDBContext : DbContext
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            public ApplicationDBContext(DbContextOptions<ApplicationDBContext> options) : base(options)
-            {
 
-            }
-            public DbSet<UserInfo> Categories { get; set; }
         }
+        public DbSet<UserInfo> Categories { get; set; }
     }
 }
