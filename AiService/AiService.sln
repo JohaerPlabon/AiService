@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiService.Models", "AiServi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiService.DataManager", "AiService.DataManager\AiService.DataManager.csproj", "{F95037CE-0A05-45EB-AB90-19726129906B}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AiService.AccountManager", "AiService.AccountManager\AiService.AccountManager.csproj", "{94D4CABF-C704-4033-B438-9B68A49A7CB6}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -27,6 +29,10 @@ Global
 		{F95037CE-0A05-45EB-AB90-19726129906B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F95037CE-0A05-45EB-AB90-19726129906B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F95037CE-0A05-45EB-AB90-19726129906B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{94D4CABF-C704-4033-B438-9B68A49A7CB6}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{94D4CABF-C704-4033-B438-9B68A49A7CB6}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{94D4CABF-C704-4033-B438-9B68A49A7CB6}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{94D4CABF-C704-4033-B438-9B68A49A7CB6}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

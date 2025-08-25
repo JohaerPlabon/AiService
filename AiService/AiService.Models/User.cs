@@ -8,11 +8,12 @@ namespace AiService.Models
         [Key]
         public int Id { get; set; }
 
-        [Required]
-        [EmailAddress]
+        [Required(ErrorMessage = "Email is required")]
+        [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [DisplayName("Email")]
         public string Email { get; set; }
 
+        [MinLength(8, ErrorMessage = "Password must be at least 8 characters long")]
         [DisplayName("Password")]
         [DataType(DataType.Password)]
         public string Password { get; set; }
@@ -21,6 +22,9 @@ namespace AiService.Models
         public bool RememberMe { get; set; }
 
         [Display(Name = "Remember me?")]
+        [Required(ErrorMessage = "Confirm Password is required")]
+        [Compare("Password", ErrorMessage = "Passwords do not match")]
+        [DataType(DataType.Password)]
         public string ConfirmPassword { get; set; }
     }
 }

@@ -16,6 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\AiService.AccountManager\AiService.AccountManager.csproj" />
     <ProjectReference Include="..\AiService.DataManager\AiService.DataManager.csproj" />
   </ItemGroup>
 
