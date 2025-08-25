@@ -1,7 +1,5 @@
-﻿using AiService.Model;
-using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
+﻿using AiService.Models;
 using Microsoft.EntityFrameworkCore;
-using System.Collections.Generic;
 
 namespace AiService.DataManager
 {
@@ -11,6 +9,6 @@ namespace AiService.DataManager
         {
 
         }
-        public DbSet<UserInfo> Categories { get; set; }
+        public DbSet<User> Categories { get; set; }
     }
 }

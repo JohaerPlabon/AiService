@@ -1,9 +1,9 @@
 ﻿using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
 
-namespace AiService.Model
+namespace AiService.Models
 {
-    public class UserInfo
+    public class User
     {
         [Key]
         public int Id { get; set; }

@@ -5,7 +5,7 @@
 namespace AiService.DataManager.Migrations
 {
     /// <inheritdoc />
-    public partial class DbMigration : Migration
+    public partial class DBMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)

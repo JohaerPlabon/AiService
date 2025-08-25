@@ -10,8 +10,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AiService.DataManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250824201547_DbMigration")]
-    partial class DbMigration
+    [Migration("20250825122343_DBMigration")]
+    partial class DBMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -19,7 +19,7 @@ namespace AiService.DataManager.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.20");
 
-            modelBuilder.Entity("AiService.Model.UserInfo", b =>
+            modelBuilder.Entity("AiService.Models.User", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
