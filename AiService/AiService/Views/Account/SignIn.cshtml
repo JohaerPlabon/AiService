@@ -1,0 +1,31 @@
+﻿@model User
+
+@{
+    ViewData["Title"] = "Login";
+}
+
+<h2>Login</h2>
+<form method="post" class="mt-3" novalidate>
+    <div class="mb-3">
+        <label class="form-label">Email</label>
+        <input asp-for="Email" class="form-control" />
+    </div>
+    <div class="mb-3">
+        <label class="form-label">Password</label>
+        <input asp-for="Password" type="password" class="form-control" />
+    </div>
+    <div class="form-check mb-3">
+        <input asp-for="RememberMe" class="form-check-input" />
+        <label class="form-check-label" asp-for="RememberMe">Remember me</label>
+    </div>
+    <button class="btn btn-primary" type="submit">Sign in</button>
+</form>
+<hr />
+<form method="post" asp-action="ExternalLogin">
+    <input type="hidden" name="provider" value="Google" />
+    <button class="btn btn-outline-danger" type="submit">Sign in with Google</button>
+</form>
+<hr />
+<form method="post" action="/Account/GuestLogin">
+    <button class="btn btn-warning" type="submit">Continue as Guest</button>
+</form>

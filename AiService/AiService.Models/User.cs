@@ -11,7 +11,7 @@ namespace AiService.Models
         [Required]
         [EmailAddress]
         [DisplayName("Email")]
-        public string Name { get; set; }
+        public string Email { get; set; }
 
         [DisplayName("Password")]
         [DataType(DataType.Password)]
@@ -19,5 +19,8 @@ namespace AiService.Models
 
         [Display(Name = "Remember me?")]
         public bool RememberMe { get; set; }
+
+        [Display(Name = "Remember me?")]
+        public string ConfirmPassword { get; set; }
     }
 }
