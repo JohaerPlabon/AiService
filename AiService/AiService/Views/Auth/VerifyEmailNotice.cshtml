@@ -1,0 +1,15 @@
+﻿@model string
+@{
+    ViewData["Title"] = "Verify Your Email";
+}
+
+<div class="container mt-5">
+    <h3>Almost done!</h3>
+    <p>We have received your registration. A verification email will be sent to <strong>@Model</strong>.</p>
+</div>
+
+<!-- Optional: Trigger email sending via AJAX -->
+<script>
+    fetch('/Account/SendVerificationEmail?email=@Model')
+        .then(response => console.log('Verification email sent'));
+</script>

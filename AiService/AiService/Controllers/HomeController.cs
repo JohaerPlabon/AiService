@@ -1,5 +1,3 @@
-using System.Diagnostics;
-using AiService.Models;
 using Microsoft.AspNetCore.Mvc;
 
 namespace AiService.Controllers
