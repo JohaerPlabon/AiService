@@ -14,7 +14,6 @@ namespace AiService.AccountManager.Repository.DTO
         public string? UserName { get; private set; }
         public bool IsGuest { get; private set; }
 
-        public bool IsEmailExist { get; private set; }
         public static AuthResult Success(Guid id, string userName, bool isGuest)
             => new AuthResult { Succeeded = true, UserId = id, UserName = userName, IsGuest = isGuest };
 
