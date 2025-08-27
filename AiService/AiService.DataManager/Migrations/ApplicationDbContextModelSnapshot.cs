@@ -28,10 +28,10 @@ namespace AiService.DataManager.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsEmailVerified")
+                    b.Property<int>("IsEmailVerified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasDefaultValue(false);
+                        .HasDefaultValue(0);
 
                     b.Property<bool>("IsGuest")
                         .HasColumnType("INTEGER");

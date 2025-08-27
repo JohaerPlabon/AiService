@@ -40,7 +40,7 @@ namespace AiService.Domains.Entities
                 IsGuest = true
             };
 
-        public bool IsEmailVerified { get; set; } = false;
+        public int IsEmailVerified { get; set; } = 0;
         public string? VerificationToken { get; set; }
         public DateTime? TokenGeneratedAt { get; set; }
         public DateTime? TokenExpiryTime { get; set; }

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AiService.DataManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250827164902_InitialMigration")]
+    [Migration("20250827175435_InitialMigration")]
     partial class InitialMigration
     {
         /// <inheritdoc />
@@ -31,10 +31,10 @@ namespace AiService.DataManager.Migrations
                         .HasMaxLength(200)
                         .HasColumnType("TEXT");
 
-                    b.Property<bool>("IsEmailVerified")
+                    b.Property<int>("IsEmailVerified")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER")
-                        .HasDefaultValue(false);
+                        .HasDefaultValue(0);
 
                     b.Property<bool>("IsGuest")
                         .HasColumnType("INTEGER");

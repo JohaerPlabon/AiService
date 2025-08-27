@@ -1,21 +1,48 @@
-﻿@{
+﻿@using AiService.Domains.Entities
+@model ApplicationUser
+
+@{
     ViewData["Title"] = "Verify Your Email";
 }
 
-<div class="container mt-5 text-center">
-    <h2 class="text-success">Almost there! 🎉</h2>
-    <p class="lead mt-3">
-        We’ve sent a verification link to your email address: <strong>@ViewBag.Email</strong>
-    </p>
-    <p class="text-muted">
-        Please check your inbox (and spam folder) and click the link to activate your account.
-    </p>
+@if(Model.IsEmailVerified == 0)
+{
+    <div class="container mt-5 text-center">
+        <h2 class="text-success">Almost there! 🎉</h2>
+        <p class="lead mt-3">
+            We’ve sent a verification link to your email address: <strong>@ViewBag.Email</strong>
+        </p>
+        <p class="text-muted">
+            Please check your inbox (and spam folder) and click the link to activate your account.
+        </p>
 
-    <div class="alert alert-info mt-4">
-        Didn’t receive the email? <a href="@Url.Action("ResendVerification", "Account", new { email = ViewBag.Email })">Resend verification link</a>
+        <div class="alert alert-info mt-4">
+            Didn’t receive the email? <a href="@Url.Action("ResendVerification", "Account", new { email = ViewBag.Email })">Resend verification link</a>
+        </div>
+
+        <a href="@Url.Action("SignIn", "Auth")" class="btn btn-primary mt-3">
+            Back to Login
+        </a>
     </div>
-
-    <a href="@Url.Action("SignIn", "Auth")" class="btn btn-primary mt-3">
-        Back to Login
-    </a>
-</div>
+}
+else if(Model.IsEmailVerified == 1)
+{
+    <div>
+        <h2 class="text-success">Email verified successfully</h2>
+        <a href="@Url.Action("SignIn", "Auth")" class="btn btn-primary mt-3">
+            Back to Login
+        </a>
+    </div>
+}
+else if (Model.IsEmailVerified == 2)
+{
+    <div>
+        <h2 class="text-success">Email verified failed!</h2>
+        <div class="alert alert-info mt-4">
+            Didn’t receive the email? <a href="@Url.Action("ResendVerification", "Account", new { email = ViewBag.Email })">Resend verification link</a>
+        </div>
+        <a href="@Url.Action("SignIn", "Auth")" class="btn btn-primary mt-3">
+            Back to Login
+        </a>
+    </div>
+}

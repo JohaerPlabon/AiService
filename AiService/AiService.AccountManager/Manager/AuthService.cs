@@ -29,9 +29,14 @@ namespace AiService.AccountManager.Manager
 
         public async Task<AuthResult> RegisterAsync()
         {
-            await _users.AddAsync(_user);
-            await _users.SaveChangesAsync();
-            return AuthResult.Success(_user.Id, _user.UserName, isGuest: false);
+            if (_user != null)
+            {
+                await _users.AddAsync(_user);
+                await _users.SaveChangesAsync();
+                return AuthResult.Success(_user.Id, _user.UserName, isGuest: false);
+            }
+
+            return AuthResult.Fail("User is null");
         }
 
         public async Task<AuthResult> LoginAsync(LoginRequest request, CancellationToken ct = default)
@@ -60,9 +65,15 @@ namespace AiService.AccountManager.Manager
             var user = await _db.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
 
             if (user == null || user.TokenExpiryTime < DateTime.UtcNow)
+            {
+                if (user != null)
+                {
+                    user.IsEmailVerified = 2;// Verification failed
+                }
                 return false;
+            }
 
-            user.IsEmailVerified = true;
+            user.IsEmailVerified = 1; //Verification success
             user.VerificationToken = null;
             user.TokenExpiryTime = null;
 

@@ -21,7 +21,7 @@ namespace AiService.DataManager.Migrations
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordSalt = table.Column<string>(type: "TEXT", nullable: false),
                     IsGuest = table.Column<bool>(type: "INTEGER", nullable: false),
-                    IsEmailVerified = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
+                    IsEmailVerified = table.Column<int>(type: "INTEGER", nullable: false, defaultValue: 0),
                     VerificationToken = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
                     TokenGeneratedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
                     TokenExpiryTime = table.Column<DateTime>(type: "TEXT", nullable: true)

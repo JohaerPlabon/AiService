@@ -1,5 +1,6 @@
 ﻿using AiService.AccountManager.Repository.DTO;
 using AiService.AccountManager.Repository.Interfaces;
+using AiService.Domains.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authorization;
@@ -11,11 +12,13 @@ namespace AiService.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _auth;
-        private RegisterRequest _registerRequest;
+        private readonly IUserRepository _user;
+        private static RegisterRequest _registerRequest;
 
-        public AuthController(IAuthService auth)
+        public AuthController(IAuthService auth, IUserRepository user)
         {
             _auth = auth;
+            _user = user;
         }
 
         [HttpGet]
@@ -57,7 +60,7 @@ namespace AiService.Controllers
             await _auth.SendVerificationEmailAsync(request);
             ViewBag.Email = request.Email;
 
-            return View("VerifyEmailNotice", request.Email);
+            return View("VerifyEmailNotice", new ApplicationUser());
         }
 
         [HttpPost]
@@ -120,7 +123,8 @@ namespace AiService.Controllers
                 result = await _auth.VerifyGmailAccount(token);
             }
 
-            return View("VerifyEmailNotice", result ? "Email verified!" : "Invalid or expired token.");
+            var info = await _user.GetByEmailAsync(_registerRequest.Email);
+            return View("VerifyEmailNotice", info);
         }
     }
 }
