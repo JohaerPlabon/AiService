@@ -29,11 +29,6 @@ namespace AiService.AccountManager.Manager
 
         public async Task<AuthResult> RegisterAsync()
         {
-            if (await _users.EmailExistsAsync(_user.Email))
-            {
-                return AuthResult.Fail("Email already registered.");
-            }
-
             await _users.AddAsync(_user);
             await _users.SaveChangesAsync();
             return AuthResult.Success(_user.Id, _user.UserName, isGuest: false);
