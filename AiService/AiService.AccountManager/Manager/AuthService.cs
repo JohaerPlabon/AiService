@@ -17,7 +17,7 @@ namespace AiService.AccountManager.Manager
         private readonly IUserRepository _users;
         private readonly IPasswordHasher _hasher;
         private readonly IEmailService _emailService;
-        private ApplicationUser _user;
+        private static ApplicationUser? _user;
 
         public AuthService(IUserRepository users, IPasswordHasher hasher, ApplicationDbContext db, IEmailService emailService)
         {

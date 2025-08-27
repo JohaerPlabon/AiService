@@ -1,19 +1,17 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using AiService.DataManager.Validation;
 using System.ComponentModel;
 using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AiService.AccountManager.Repository.DTO
 {
     public class RegisterRequest
     {
         [Required, EmailAddress]
+        [UniqueMailAccount]
         public string Email { get; set; } = string.Empty;
 
         [Required, MinLength(3)]
+        [UniqueUserName]
         public string UserName { get; set; } = string.Empty;
 
         [Required]
