@@ -21,27 +21,27 @@ namespace AiService.AccountManager.Manager
 
         public async Task SendEmailAsync(string to, string subject, string body)
         {
-            var smtpClient = new SmtpClient("smtp.gmail.com")
+            var smtpHost = _config["EmailSettings:SmtpHost"];
+            var smtpPort = int.Parse(_config["EmailSettings:SmtpPort"]);
+            var fromEmail = _config["EmailSettings:FromEmail"];
+            var password = _config["EmailSettings:Password"];
+
+            using var smtp = new SmtpClient(smtpHost, smtpPort)
             {
-                Port = 587,
-                Credentials = new NetworkCredential(
-                    _config["Email:From"],
-                    _config["Email:Password"]
-                ),
-                EnableSsl = true,
+                Credentials = new NetworkCredential
+                {
+                    UserName = fromEmail,
+                    Password = password
+                },
+                EnableSsl = true
             };
 
-            var mailMessage = new MailMessage
+            var message = new MailMessage(fromEmail, to, subject, body)
             {
-                From = new MailAddress(_config["Email:From"]),
-                Subject = subject,
-                Body = body,
-                IsBodyHtml = true,
+                IsBodyHtml = true
             };
 
-            mailMessage.To.Add(to);
-
-            await smtpClient.SendMailAsync(mailMessage);
+            await smtp.SendMailAsync(message);
         }
     }
 }

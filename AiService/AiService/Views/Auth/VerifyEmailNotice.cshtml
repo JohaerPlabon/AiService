@@ -1,15 +1,21 @@
-﻿@model string
-@{
+﻿@{
     ViewData["Title"] = "Verify Your Email";
 }
 
-<div class="container mt-5">
-    <h3>Almost done!</h3>
-    <p>We have received your registration. A verification email will be sent to <strong>@Model</strong>.</p>
-</div>
+<div class="container mt-5 text-center">
+    <h2 class="text-success">Almost there! 🎉</h2>
+    <p class="lead mt-3">
+        We’ve sent a verification link to your email address: <strong>@ViewBag.Email</strong>
+    </p>
+    <p class="text-muted">
+        Please check your inbox (and spam folder) and click the link to activate your account.
+    </p>
 
-<!-- Optional: Trigger email sending via AJAX -->
-<script>
-    fetch('/Account/SendVerificationEmail?email=@Model')
-        .then(response => console.log('Verification email sent'));
-</script>
+    <div class="alert alert-info mt-4">
+        Didn’t receive the email? <a href="@Url.Action("ResendVerification", "Account", new { email = ViewBag.Email })">Resend verification link</a>
+    </div>
+
+    <a href="@Url.Action("SignIn", "Account")" class="btn btn-primary mt-3">
+        Back to Login
+    </a>
+</div>

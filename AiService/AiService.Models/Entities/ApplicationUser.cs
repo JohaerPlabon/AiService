@@ -25,7 +25,9 @@ namespace AiService.Domains.Entities
                 UserName = userName,
                 PasswordHash = passwordHash,
                 PasswordSalt = passwordSalt,
-                IsGuest = false
+                IsGuest = false,
+                VerificationToken = Guid.NewGuid().ToString(),
+                TokenExpiryTime = DateTime.UtcNow.AddHours(24)
             };
 
         public static ApplicationUser CreateGuest(string userName)
@@ -41,5 +43,6 @@ namespace AiService.Domains.Entities
         public bool IsEmailVerified { get; set; } = false;
         public string? VerificationToken { get; set; }
         public DateTime? TokenGeneratedAt { get; set; }
+        public DateTime? TokenExpiryTime { get; set; }
     }
 }

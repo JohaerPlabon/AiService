@@ -17,8 +17,7 @@ namespace AiService.AccountManager.Manager
         private readonly IUserRepository _users;
         private readonly IPasswordHasher _hasher;
         private readonly IEmailService _emailService;
-        private RegisterRequest _registerRequest;
-        private CancellationToken _ct;
+        private ApplicationUser _user;
 
         public AuthService(IUserRepository users, IPasswordHasher hasher, ApplicationDbContext db, IEmailService emailService)
         {
@@ -28,13 +27,16 @@ namespace AiService.AccountManager.Manager
             _emailService = emailService;
         }
 
-        public async Task<AuthResult> RegisterAsync(RegisterRequest request, CancellationToken ct = default)
+        public async Task<AuthResult> RegisterAsync()
         {
-            var (hash, salt) = _hasher.Hash(request.Password);
-            var user = ApplicationUser.CreateRegistered(request.Email, request.UserName, hash, salt);
-            await _users.AddAsync(user, ct);
-            await _users.SaveChangesAsync(ct);
-            return AuthResult.Success(user.Id, user.UserName, isGuest: false);
+            if (await _users.EmailExistsAsync(_user.Email))
+            {
+                return AuthResult.Fail("Email already registered.");
+            }
+
+            await _users.AddAsync(_user);
+            await _users.SaveChangesAsync();
+            return AuthResult.Success(_user.Id, _user.UserName, isGuest: false);
         }
 
         public async Task<AuthResult> LoginAsync(LoginRequest request, CancellationToken ct = default)
@@ -58,35 +60,30 @@ namespace AiService.AccountManager.Manager
             return AuthResult.Success(guest.Id, guest.UserName, isGuest: true);
         }
 
-        public bool VerifyGmailAccount(string token)
+        async Task<bool> IAuthService.VerifyGmailAccount(string token)
         {
-            var user = _db.Users.FirstOrDefaultAsync(u => u.VerificationToken == token).Result;
-            if (user == null) return false;
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
+
+            if (user == null || user.TokenExpiryTime < DateTime.UtcNow)
+                return false;
 
             user.IsEmailVerified = true;
             user.VerificationToken = null;
-            _db.SaveChangesAsync();
+            user.TokenExpiryTime = null;
+
+            await _db.SaveChangesAsync();
 
             return true;
         }
 
-        Task<bool> IAuthService.VerifyGmailAccount(string token)
+        public async Task SendVerificationEmailAsync(RegisterRequest request)
         {
-            throw new NotImplementedException();
-        }
+            var (hash, salt) = _hasher.Hash(request.Password);
+            _user = ApplicationUser.CreateRegistered(request.Email, request.UserName, hash, salt);
 
-        public async Task<bool> IsEmailExists(RegisterRequest request, CancellationToken ct = default)
-        {
-            _registerRequest = request;
-            _ct = ct;
-
-            if (await _users.EmailExistsAsync(request.Email, ct))
-            {
-                AuthResult.Fail("Email already registered.");
-                return true;
-            }
-
-            false;
+            var link = $"https://localhost:5001/Auth/VerifyEmail?token={_user.VerificationToken}";
+            await _emailService.SendEmailAsync(_user.Email, "Verify your account",
+                $"<p>Click <a href='{link}'>here</a> to verify your email.</p>");
         }
     }
 }

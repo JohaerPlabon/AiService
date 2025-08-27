@@ -11,6 +11,7 @@ namespace AiService.Controllers
     public class AuthController : Controller
     {
         private readonly IAuthService _auth;
+        private RegisterRequest _registerRequest;
 
         public AuthController(IAuthService auth)
         {
@@ -44,23 +45,19 @@ namespace AiService.Controllers
 
         [HttpGet]
         [AllowAnonymous]
-        public IActionResult SignUp() => View(new RegisterRequest());
+        public IActionResult SignUp() => View(new AccountManager.Repository.DTO.RegisterRequest());
 
         [HttpPost]
         [AllowAnonymous]
-        public async Task<IActionResult> SignUp(RegisterRequest request)
+        public async Task<IActionResult> SignUp(AccountManager.Repository.DTO.RegisterRequest request)
         {
             if (!ModelState.IsValid) return View(request);
+            _registerRequest = request;
 
-            var result = await _auth.RegisterAsync(request);
-            if (!result.Succeeded)
-            {
-                ModelState.AddModelError(string.Empty, result.Error ?? "Registration failed");
-                return View(request);
-            }
+            await _auth.SendVerificationEmailAsync(request);
+            ViewBag.Email = request.Email;
 
-            await SignInAsync(result.UserId!.Value, result.UserName!, isGuest: false, persistent: true);
-            return RedirectToAction("Index", "Home");
+            return View("VerifyEmailNotice", request.Email);
         }
 
         [HttpPost]
@@ -99,11 +96,31 @@ namespace AiService.Controllers
         private IActionResult RedirectToLocal(string? returnUrl)
             => Url.IsLocalUrl(returnUrl) ? Redirect(returnUrl!) : RedirectToAction("Index", "Home");
 
+        private async Task<AuthResult> RegisterVerifiedAccount()
+        {
+            var result = await _auth.RegisterAsync();
+
+            if (!result.Succeeded)
+            {
+                ModelState.AddModelError(string.Empty, result.Error ?? "Registration failed");
+                return result;
+            }
+
+            await SignInAsync(result.UserId!.Value, result.UserName!, isGuest: false, persistent: true);
+            return AuthResult.Success(result.UserId!.Value, result.UserName!, false);
+        }
+
         [HttpGet]
         public async Task<IActionResult> VerifyEmail(string token)
         {
-            var result = await _auth.VerifyGmailAccount(token);
-            return View("Info", result ? "Email verified!" : "Invalid or expired token.");
+            var response = await RegisterVerifiedAccount();
+            bool result = false;
+            if (response.Succeeded)
+            {
+                result = await _auth.VerifyGmailAccount(token);
+            }
+
+            return View("VerifyEmailNotice", result ? "Email verified!" : "Invalid or expired token.");
         }
     }
 }
