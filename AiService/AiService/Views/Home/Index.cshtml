@@ -1,16 +1,30 @@
-﻿
+﻿@using AiService.Domains.Entities
+@using Microsoft.AspNetCore.Authentication
+@using Microsoft.AspNetCore.Authorization
+@using System.Security.Claims
+@inject IHttpContextAccessor HttpCtx
+@model ApplicationUser
+
 @{
     ViewData["Title"] = "Home Page";
 }
 
 <div class="text-center">
     <h1 class="display-5">Welcome</h1>
-    <p class="lead">Local signup, Google sign-in, and Guest access.</p>
-    <div class="d-flex justify-content-center gap-2">
-        <a class="btn btn-primary" href="/Account/Register">Sign up</a>
-        <a class="btn btn-outline-secondary" href="/Account/Login">Sign in</a>
-        <form method="post" action="/Account/GuestLogin">
-            <button class="btn btn-warning">Continue as Guest</button>
-        </form>
-    </div>
+    @if (@User == null || @User.Identity == null || @User.Identity!.Name == null)
+    {
+        <p class="lead">Local signup, Google sign-in, and Guest access.</p>
+        <div class="d-flex justify-content-center gap-2">
+            <a class="btn btn-primary" href="/Auth/SignUp">Sign up</a>
+            <a class="btn btn-outline-secondary" href="/Auth/SignIn">Sign in</a>
+            <form method="post" action="/Account/GuestLogin">
+                <button class="btn btn-warning">Continue as Guest</button>
+            </form>
+        </div>
+    }
+    else
+    {
+        <p>This is a project of multiple AI Service</p>
+    }
+
 </div>

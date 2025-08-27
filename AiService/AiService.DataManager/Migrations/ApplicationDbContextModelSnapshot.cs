@@ -36,6 +36,11 @@ namespace AiService.DataManager.Migrations
                     b.Property<bool>("IsGuest")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsSignedIn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
+
                     b.Property<string>("PasswordHash")
                         .IsRequired()
                         .HasColumnType("TEXT");

@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AiService.DataManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250827175435_InitialMigration")]
-    partial class InitialMigration
+    [Migration("20250827195658_DbContextMigration")]
+    partial class DbContextMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -38,6 +38,11 @@ namespace AiService.DataManager.Migrations
 
                     b.Property<bool>("IsGuest")
                         .HasColumnType("INTEGER");
+
+                    b.Property<bool>("IsSignedIn")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER")
+                        .HasDefaultValue(false);
 
                     b.Property<string>("PasswordHash")
                         .IsRequired()

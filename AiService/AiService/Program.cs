@@ -17,6 +17,7 @@ var cs = builder.Configuration.GetConnectionString("DefaultConnection")!;
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite(cs));
 
 // Auth - Cookie
+builder.Services.AddHttpContextAccessor();
 builder.Services
     .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
     .AddCookie(options =>

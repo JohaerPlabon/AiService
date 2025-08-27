@@ -48,6 +48,8 @@ namespace AiService.AccountManager.Manager
             var valid = _hasher.Verify(request.Password, user.PasswordHash, user.PasswordSalt);
             if (!valid) return AuthResult.Fail("Invalid credentials.");
 
+            user.IsSignedIn = true;
+            await _db.SaveChangesAsync();
             return AuthResult.Success(user.Id, user.UserName, isGuest: false);
         }
 
@@ -62,24 +64,32 @@ namespace AiService.AccountManager.Manager
 
         async Task<bool> IAuthService.VerifyGmailAccount(string token)
         {
-            var user = await _db.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
-
-            if (user == null || user.TokenExpiryTime < DateTime.UtcNow)
+            try
             {
-                if (user != null)
+                var user = await _db.Users.FirstOrDefaultAsync(u => u.VerificationToken == token);
+
+                if (user == null || user.TokenExpiryTime < DateTime.UtcNow)
                 {
-                    user.IsEmailVerified = 2;// Verification failed
+                    if (user != null)
+                    {
+                        user.IsEmailVerified = 2;// Verification failed
+                    }
+                    return false;
                 }
-                return false;
+
+                user.IsEmailVerified = 1; //Verification success
+                user.VerificationToken = null;
+                user.TokenExpiryTime = null;
+
+                await _db.SaveChangesAsync();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                var ms = ex.Message;
             }
 
-            user.IsEmailVerified = 1; //Verification success
-            user.VerificationToken = null;
-            user.TokenExpiryTime = null;
-
-            await _db.SaveChangesAsync();
-
-            return true;
+            return false;
         }
 
         public async Task SendVerificationEmailAsync(RegisterRequest request)

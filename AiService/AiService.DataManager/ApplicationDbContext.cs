@@ -24,6 +24,7 @@ namespace AiService.DataManager
                 b.Property(x => x.VerificationToken).HasMaxLength(200).IsRequired(false);
                 b.Property(x => x.TokenGeneratedAt).IsRequired(false);
                 b.Property(x => x.TokenExpiryTime).IsRequired(false);
+                b.Property(x => x.IsSignedIn).IsRequired(true).HasDefaultValue(false);
             });
         }
     }

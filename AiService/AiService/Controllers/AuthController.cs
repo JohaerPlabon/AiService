@@ -25,7 +25,6 @@ namespace AiService.Controllers
         [AllowAnonymous]
         public IActionResult SignIn(string? returnUrl = null)
         {
-            ViewBag.ReturnUrl = returnUrl;
             return View(new LoginRequest());
         }
 
@@ -43,7 +42,7 @@ namespace AiService.Controllers
             }
 
             await SignInAsync(result.UserId!.Value, result.UserName!, isGuest: false, request.RememberMe);
-            return RedirectToLocal(returnUrl);
+            return RedirectToLocal("Home/Index");
         }
 
         [HttpGet]
@@ -76,7 +75,7 @@ namespace AiService.Controllers
         public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
-            return RedirectToAction("Login");
+            return RedirectToAction("SignIn");
         }
 
         private async Task SignInAsync(Guid userId, string userName, bool isGuest, bool persistent)
@@ -109,7 +108,7 @@ namespace AiService.Controllers
                 return result;
             }
 
-            await SignInAsync(result.UserId!.Value, result.UserName!, isGuest: false, persistent: true);
+            //await SignInAsync(result.UserId!.Value, result.UserName!, isGuest: false, persistent: true);
             return AuthResult.Success(result.UserId!.Value, result.UserName!, false);
         }
 
@@ -123,6 +122,7 @@ namespace AiService.Controllers
                 result = await _auth.VerifyGmailAccount(token);
             }
 
+            await Task.Delay(100);
             var info = await _user.GetByEmailAsync(_registerRequest.Email);
             return View("VerifyEmailNotice", info);
         }

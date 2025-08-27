@@ -27,7 +27,8 @@ namespace AiService.Domains.Entities
                 PasswordSalt = passwordSalt,
                 IsGuest = false,
                 VerificationToken = Guid.NewGuid().ToString(),
-                TokenExpiryTime = DateTime.UtcNow.AddHours(24)
+                TokenExpiryTime = DateTime.UtcNow.AddHours(24),
+                IsSignedIn = false
             };
 
         public static ApplicationUser CreateGuest(string userName)
@@ -37,9 +38,11 @@ namespace AiService.Domains.Entities
                 UserName = userName,
                 PasswordHash = string.Empty,
                 PasswordSalt = string.Empty,
-                IsGuest = true
+                IsGuest = true,
+                IsSignedIn = false
             };
 
+        public bool IsSignedIn { get; set; } = false;
         public int IsEmailVerified { get; set; } = 0;
         public string? VerificationToken { get; set; }
         public DateTime? TokenGeneratedAt { get; set; }
