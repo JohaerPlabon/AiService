@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace AiService.DataManager.Migrations
 {
     /// <inheritdoc />
-    public partial class InitDbContext : Migration
+    public partial class InitialMigration : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -20,10 +20,11 @@ namespace AiService.DataManager.Migrations
                     UserName = table.Column<string>(type: "TEXT", maxLength: 100, nullable: false),
                     PasswordHash = table.Column<string>(type: "TEXT", nullable: false),
                     PasswordSalt = table.Column<string>(type: "TEXT", nullable: false),
-                    Password = table.Column<string>(type: "TEXT", nullable: false),
-                    RememberMe = table.Column<bool>(type: "INTEGER", nullable: false),
-                    ConfirmPassword = table.Column<string>(type: "TEXT", nullable: false),
-                    IsGuest = table.Column<bool>(type: "INTEGER", nullable: false)
+                    IsGuest = table.Column<bool>(type: "INTEGER", nullable: false),
+                    IsEmailVerified = table.Column<bool>(type: "INTEGER", nullable: false, defaultValue: false),
+                    VerificationToken = table.Column<string>(type: "TEXT", maxLength: 200, nullable: true),
+                    TokenGeneratedAt = table.Column<DateTime>(type: "TEXT", nullable: true),
+                    TokenExpiryTime = table.Column<DateTime>(type: "TEXT", nullable: true)
                 },
                 constraints: table =>
                 {

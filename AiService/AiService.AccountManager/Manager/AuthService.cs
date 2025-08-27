@@ -81,7 +81,7 @@ namespace AiService.AccountManager.Manager
             var (hash, salt) = _hasher.Hash(request.Password);
             _user = ApplicationUser.CreateRegistered(request.Email, request.UserName, hash, salt);
 
-            var link = $"https://localhost:5001/Auth/VerifyEmail?token={_user.VerificationToken}";
+            var link = $"https://localhost:7012/Auth/VerifyEmail?token={_user.VerificationToken}";
             await _emailService.SendEmailAsync(_user.Email, "Verify your account",
                 $"<p>Click <a href='{link}'>here</a> to verify your email.</p>");
         }
