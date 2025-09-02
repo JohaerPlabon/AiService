@@ -12,7 +12,7 @@ namespace AiService.Domains.Entities
         [EmailAddress(ErrorMessage = "Invalid Email Address")]
         [DisplayName("Email")]
         public string Email { get; set; }
-        public string UserName { get; private set; } = string.Empty;
+        public string UserName { get; set; } = string.Empty;
         public string PasswordHash { get; private set; } = string.Empty;
         public string PasswordSalt { get; private set; } = string.Empty;
 
@@ -47,5 +47,6 @@ namespace AiService.Domains.Entities
         public string? VerificationToken { get; set; }
         public DateTime? TokenGeneratedAt { get; set; }
         public DateTime? TokenExpiryTime { get; set; }
+        public DateTime? VerifiedTime { get; set; }
     }
 }

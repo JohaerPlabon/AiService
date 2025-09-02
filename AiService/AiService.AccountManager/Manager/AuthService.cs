@@ -62,7 +62,32 @@ namespace AiService.AccountManager.Manager
             return AuthResult.Success(guest.Id, guest.UserName, isGuest: true);
         }
 
-        async Task<bool> IAuthService.VerifyGmailAccount(string token)
+        public async Task<ApplicationUser> UpdateGoogleUserStatus(string email, string? name)
+        {
+            var user = await _db.Users.FirstOrDefaultAsync(u => u.Email == email);
+            if (user == null)
+            {
+                user = new ApplicationUser
+                {
+                    Email = email,
+                    UserName = string.IsNullOrWhiteSpace(name) ? email : name!,
+                    IsEmailVerified = 1 // Google verified
+                };
+                _db.Users.Add(user);
+                await _db.SaveChangesAsync();
+            }
+            else if (user.IsEmailVerified != 1)
+            {
+                user.IsEmailVerified = 1;
+                user.VerifiedTime = DateTime.UtcNow;
+                user.VerificationToken = null;
+                user.TokenExpiryTime = null;
+                await _db.SaveChangesAsync();
+            }
+            return user;
+        }
+
+        async Task<bool> IAuthService.UpdateGmailVerificationStatus(string token)
         {
             try
             {

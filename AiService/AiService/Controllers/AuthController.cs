@@ -3,6 +3,7 @@ using AiService.AccountManager.Repository.Interfaces;
 using AiService.Domains.Entities;
 using Microsoft.AspNetCore.Authentication;
 using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication.Google;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System.Security.Claims;
@@ -119,12 +120,62 @@ namespace AiService.Controllers
             bool result = false;
             if (response.Succeeded)
             {
-                result = await _auth.VerifyGmailAccount(token);
+                result = await _auth.UpdateGmailVerificationStatus(token);
             }
 
             await Task.Delay(100);
             var info = await _user.GetByEmailAsync(_registerRequest.Email);
             return View("VerifyEmailNotice", info);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public IActionResult LoginWithGoogle(string returnUrl = "/")
+        {
+            var props = new AuthenticationProperties { RedirectUri = Url.Action("GoogleCallback", new { returnUrl }) };
+            return Challenge(props, GoogleDefaults.AuthenticationScheme);
+        }
+
+        [HttpGet]
+        [AllowAnonymous]
+        public async Task<IActionResult> GoogleCallback(string returnUrl = "/")
+        {
+            // Get the Google principal from the cookie (the Google handler signs into Cookie scheme)
+            var authResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = authResult?.Principal ?? User;
+
+            // In some setups the cookie might not carry Google claims yet; fall back:
+            if (principal?.Identity is null || !principal.Identity.IsAuthenticated)
+            {
+                var googleTicket = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
+                principal = googleTicket?.Principal;
+            }
+
+            var email = principal?.FindFirst(ClaimTypes.Email)?.Value;
+            var name = principal?.FindFirst(ClaimTypes.Name)?.Value;
+
+            if (string.IsNullOrEmpty(email))
+                return View("Info", "Unable to retrieve your Google account email.");
+
+            // Upsert user and mark verified
+            var user = await _auth.UpdateGoogleUserStatus(email, name);
+            await SignInAppCookieAsync(user);
+
+            return LocalRedirect(returnUrl);
+        }
+
+        private async Task SignInAppCookieAsync(ApplicationUser user)
+        {
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, user.Id.ToString()),
+                new Claim(ClaimTypes.Email, user.Email),
+                new Claim(ClaimTypes.Name, string.IsNullOrWhiteSpace(user.UserName) ? user.Email : user.UserName),
+            };
+
+            var identity = new ClaimsIdentity(claims, CookieAuthenticationDefaults.AuthenticationScheme);
+            var principal = new ClaimsPrincipal(identity);
+            await HttpContext.SignInAsync(CookieAuthenticationDefaults.AuthenticationScheme, principal);
         }
     }
 }

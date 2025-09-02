@@ -25,10 +25,9 @@
 </form>
 <hr />
 
-<form method="post" asp-action="ExternalLogin">
-    <input type="hidden" name="provider" value="Google" />
-    <button class="btn btn-outline-danger" type="submit">Sign in with Google</button>
-</form>
+<div class="mb-3">
+    <a class="btn btn-outline-danger" href="/Auth/LoginWithGoogle">Continue with Google</a>
+</div>
 
 <hr />
 <form method="post" asp-action="ContinueAsGuest">

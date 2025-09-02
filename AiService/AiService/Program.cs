@@ -16,16 +16,27 @@ builder.Services.AddControllersWithViews();
 var cs = builder.Configuration.GetConnectionString("DefaultConnection")!;
 builder.Services.AddDbContext<ApplicationDbContext>(opt => opt.UseSqlite(cs));
 
-// Auth - Cookie
+// Auth - Cookie + google
 builder.Services.AddHttpContextAccessor();
 builder.Services
-    .AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddAuthentication(options =>
+    {
+        options.DefaultScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+        options.DefaultChallengeScheme = CookieAuthenticationDefaults.AuthenticationScheme;
+    })
     .AddCookie(options =>
     {
         options.LoginPath = "/Auth/Login";
         options.LogoutPath = "/Auth/Logout";
         options.AccessDeniedPath = "/Auth/Login";
         options.SlidingExpiration = true;
+    })
+    .AddGoogle(options =>
+    {
+        options.ClientId = builder.Configuration["Authentication:Google:ClientId"]!;
+        options.ClientSecret = builder.Configuration["Authentication:Google:ClientSecret"]!;
+        options.CallbackPath = "/Auth/GoogleCallback"; // must match Google console
+        options.SaveTokens = true;
     });
 
 builder.Services.AddAuthorization(options =>
