@@ -140,11 +140,9 @@ namespace AiService.Controllers
         [AllowAnonymous]
         public async Task<IActionResult> GoogleCallback(string returnUrl = "/")
         {
-            // Get the Google principal from the cookie (the Google handler signs into Cookie scheme)
             var authResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = authResult?.Principal ?? User;
 
-            // In some setups the cookie might not carry Google claims yet; fall back:
             if (principal?.Identity is null || !principal.Identity.IsAuthenticated)
             {
                 var googleTicket = await HttpContext.AuthenticateAsync(GoogleDefaults.AuthenticationScheme);
@@ -157,7 +155,6 @@ namespace AiService.Controllers
             if (string.IsNullOrEmpty(email))
                 return View("Info", "Unable to retrieve your Google account email.");
 
-            // Upsert user and mark verified
             var user = await _auth.UpdateGoogleUserStatus(email, name);
             await SignInAppCookieAsync(user);
 
