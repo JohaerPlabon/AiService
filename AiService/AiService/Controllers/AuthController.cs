@@ -14,7 +14,7 @@ namespace AiService.Controllers
     {
         private readonly IAuthService _auth;
         private readonly IUserRepository _user;
-        private static RegisterRequest _registerRequest;
+        private static RegisterRequest? _registerRequest { get; set; }
 
         public AuthController(IAuthService auth, IUserRepository user)
         {
@@ -109,7 +109,6 @@ namespace AiService.Controllers
                 return result;
             }
 
-            //await SignInAsync(result.UserId!.Value, result.UserName!, isGuest: false, persistent: true);
             return AuthResult.Success(result.UserId!.Value, result.UserName!, false);
         }
 
