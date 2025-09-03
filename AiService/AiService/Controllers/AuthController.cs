@@ -63,7 +63,7 @@ namespace AiService.Controllers
             return View("VerifyEmailNotice", new ApplicationUser());
         }
 
-        [HttpPost]
+        [HttpGet]
         [AllowAnonymous]
         public async Task<IActionResult> Guest()
         {
