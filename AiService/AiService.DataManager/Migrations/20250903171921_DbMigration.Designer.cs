@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AiService.DataManager.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20250827195658_DbContextMigration")]
-    partial class DbContextMigration
+    [Migration("20250903171921_DbMigration")]
+    partial class DbMigration
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -65,6 +65,10 @@ namespace AiService.DataManager.Migrations
 
                     b.Property<string>("VerificationToken")
                         .HasMaxLength(200)
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime?>("VerifiedTime")
+                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

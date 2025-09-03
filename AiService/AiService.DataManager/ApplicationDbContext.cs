@@ -25,6 +25,7 @@ namespace AiService.DataManager
                 b.Property(x => x.TokenGeneratedAt).IsRequired(false);
                 b.Property(x => x.TokenExpiryTime).IsRequired(false);
                 b.Property(x => x.IsSignedIn).IsRequired(true).HasDefaultValue(false);
+                b.Property(x => x.VerifiedTime).IsRequired(true);
             });
         }
     }

@@ -71,7 +71,8 @@ namespace AiService.AccountManager.Manager
                 {
                     Email = email,
                     UserName = string.IsNullOrWhiteSpace(name) ? email : name!,
-                    IsEmailVerified = 1 // Google verified
+                    IsEmailVerified = 1, // Google verified
+                    VerifiedTime = DateTime.UtcNow
                 };
                 _db.Users.Add(user);
                 await _db.SaveChangesAsync();

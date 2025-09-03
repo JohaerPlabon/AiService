@@ -132,13 +132,13 @@ namespace AiService.Controllers
         [AllowAnonymous]
         public IActionResult LoginWithGoogle(string returnUrl = "/")
         {
-            var props = new AuthenticationProperties { RedirectUri = Url.Action("GoogleCallback", new { returnUrl }) };
+            var props = new AuthenticationProperties { RedirectUri = Url.Action("GoogleAuthenticationCallback", "Auth") };
             return Challenge(props, GoogleDefaults.AuthenticationScheme);
         }
 
         [HttpGet]
         [AllowAnonymous]
-        public async Task<IActionResult> GoogleCallback(string returnUrl = "/")
+        public async Task<IActionResult> GoogleAuthenticationCallback(string returnUrl = "/")
         {
             var authResult = await HttpContext.AuthenticateAsync(CookieAuthenticationDefaults.AuthenticationScheme);
             var principal = authResult?.Principal ?? User;
