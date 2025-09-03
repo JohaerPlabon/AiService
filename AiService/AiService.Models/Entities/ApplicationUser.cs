@@ -47,6 +47,6 @@ namespace AiService.Domains.Entities
         public string? VerificationToken { get; set; }
         public DateTime? TokenGeneratedAt { get; set; }
         public DateTime? TokenExpiryTime { get; set; }
-        public DateTime? VerifiedTime { get; set; }
+        public DateTime VerifiedTime { get; set; }
     }
 }
