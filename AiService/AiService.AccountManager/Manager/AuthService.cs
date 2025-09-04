@@ -125,7 +125,7 @@ namespace AiService.AccountManager.Manager
 
             var link = $"https://localhost:7012/Auth/VerifyEmail?token={_user.VerificationToken}";
             await _emailService.SendEmailAsync(_user.Email, "Verify your account",
-                $"<p>Click <a href='{link}'>here</a> to verify your email.</p>");
+                $"<p>Enter this link: {link} to verify your email.</p>");
         }
     }
 }
