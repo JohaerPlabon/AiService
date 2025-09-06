@@ -20,3 +20,33 @@ html {
 body {
   margin-bottom: 60px;
 }
+
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #f4f4f9;
+}
+
+.card {
+    border-radius: 15px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card-body {
+    padding: 30px;
+}
+
+.btn-primary {
+    padding: 12px;
+    border-radius: 30px;
+}
+
+.btn-outline-danger {
+    padding: 12px;
+    border-radius: 30px;
+}
+
+.btn-warning {
+    padding: 8px;
+    border-radius: 30px;
+}
