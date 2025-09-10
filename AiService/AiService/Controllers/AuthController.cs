@@ -72,15 +72,9 @@ namespace AiService.Controllers
             return RedirectToAction("Index", "Home");
         }
 
-        [Authorize]
-        public IActionResult ShowConfirmLogoutCard()
-        {
-            return View("ConfirmLogoutCard");
-        }
-
-        [Authorize]
-        [HttpPost]
-        public async Task<IActionResult> LogOut()
+        [AllowAnonymous]
+        [HttpGet]
+        public async Task<IActionResult> Logout()
         {
             await HttpContext.SignOutAsync();
             return RedirectToAction("SignIn");
