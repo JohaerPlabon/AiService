@@ -1,0 +1,67 @@
+﻿<div class="container my-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6">
+
+            <div class="card shadow-lg p-4 border-0 rounded-3">
+                <h4 class="card-title mb-3 text-center">Buy Credits</h4>
+
+                <div class="d-flex align-items-center justify-content-between mb-3">
+                    <label for="amount" class="form-label fw-semibold mb-0">Amount (Tk)</label>
+                    <input type="number" id="amount" class="form-control w-50" min="0" value="100">
+                </div>
+
+                <div class="d-flex justify-content-between align-items-center mb-4">
+                    <span class="text-muted">Credits</span>
+                    <span id="credits" class="fw-bold fs-5 text-primary">100</span>
+                </div>
+
+                <button class="btn btn-primary w-100 btn-lg rounded-pill">Buy Now</button>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    const amountInput = document.getElementById('amount');
+    const creditsDisplay = document.getElementById('credits');
+
+    amountInput.addEventListener('input', () => {
+        let amount = parseInt(amountInput.value) || 0;
+        creditsDisplay.textContent = amount;
+    });
+</script>
+
+<style>
+    .card {
+        background: linear-gradient(145deg, #f8f9fa, #ffffff);
+        border-radius: 1rem;
+        transition: transform 0.3s, box-shadow 0.3s;
+    }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 1rem 2rem rgba(0,0,0,0.2);
+        }
+
+    #amount {
+        text-align: right;
+        font-weight: 500;
+        font-size: 1.1rem;
+    }
+
+    #credits {
+        font-size: 1.25rem;
+    }
+
+    .btn-primary {
+        font-weight: 600;
+        box-shadow: 0 4px 10px rgba(13,110,253,0.3);
+        transition: transform 0.2s, box-shadow 0.2s;
+    }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 14px rgba(13,110,253,0.4);
+        }
+</style>
