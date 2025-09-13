@@ -47,7 +47,7 @@
                 {
                     <div class="col-md-4">
                         <div class="card shadow h-100">
-                            <a href="/Auth/SignIn" class="stretched-link text-decoration-none text-dark">
+                            <a data-bs-toggle ="modal" data-bs-target="#paymentModal" class="stretched-link text-decoration-none text-dark">
                                 <div class="card-body">
                                     @if (!string.IsNullOrEmpty(offer.Tag))
                                     {
@@ -82,7 +82,7 @@
                             <span class="text-muted">Credits</span>
                             <span id="credits" class="fw-bold fs-5 text-primary">100</span>
                         </div>
-                        <button class="btn btn-primary w-100 btn-lg rounded-pill">Buy Now</button>
+                        <button class="btn btn-primary w-100 btn-lg rounded-pill" data-bs-toggle="modal" data-bs-target="#paymentModal">Buy Now</button>
                     </div>
                 </div>
             </div>
@@ -121,3 +121,5 @@
         }
     </style>
 </div>
+
+<partial name="~/Views/Shared/Payment.cshtml" />

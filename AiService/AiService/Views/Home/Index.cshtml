@@ -8,8 +8,8 @@
 @{
     ViewData["Title"] = "Home Page";
 }
-
-<div class="text-center">
+ 
+@* <div class="text-center">
     <h1 class="display-5">Welcome</h1>
     @if (@User == null || @User.Identity == null || @User.Identity!.Name == null)
     {
@@ -26,4 +26,324 @@
         <a href="#credits-section" class="btn btn-lg btn-light text-primary fw-bold shadow-lg">Buy Credits Now</a>
     }
 
+</div> *@
+
+<div class="container py-5">
+
+    <!-- Hero Section -->
+    <div class="text-center mb-5">
+        <img src="~/Assets/Images/ai-technology.png" alt="AiService Logo" style="height:60px;" class="mb-3" />
+        <h1 class="fw-bold display-5">Welcome to <span class="text-primary">AiService</span></h1>
+        <p class="lead text-muted">
+            One platform to access all AI-powered tools — from text generation to code helpers,
+            image processing, and more.
+        </p>
+        @if (@User == null || @User.Identity == null || @User.Identity!.Name == null)
+        {
+            <p class="lead">Login or Sign up to use any service!</p>
+            <div class="d-flex justify-content-center gap-2">
+                <a class="btn btn-primary" href="/Auth/SignUp">Sign up</a>
+                <a class="btn btn-outline-secondary" href="/Auth/SignIn">Sign in</a>
+            </div>
+        }
+        else
+        {
+            <a href="#features" class="btn btn-primary btn-lg rounded-pill">Buy Credits</a>
+        }
+    </div>
+
+    <!-- Features Section -->
+    <div id="features" class="row g-5">
+
+        <!-- Feature 1 -->
+        <div class="col-6 feature-card d-flex gap-4">
+            <div>
+                <img src="~/Assets/Images/textgen.jpg" alt="AI Text" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Text Generator</h2>
+                <p class="text-muted">
+                    Generate human-like content instantly for blogs, emails, and creative writing.
+                    Save time and improve productivity with natural language AI.
+                </p>
+                <a href="/Service/TextGenerator" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <!-- Feature 2 -->
+        <div class="col-6 feature-card d-flex gap-4 flex-row-reverse">
+            <div>
+                <img src="~/Assets/Images/imagen.png" alt="AI Image" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Image Generator</h2>
+                <p class="text-muted">
+                    Enhance, upscale, and transform images with advanced AI technology.
+                    Perfect for design, photography, and content creation.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-6 feature-card d-flex gap-4">
+            <div>
+                <img src="~/Assets/Images/voicegen.jpg" alt="AI Voice" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Voice Generator</h2>
+                <p class="text-muted">
+                    Create natural-sounding voices for narration, videos, and virtual assistants.
+                    Choose from multiple tones and languages.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-6 feature-card d-flex gap-4 flex-row-reverse">
+            <div>
+                <img src="~/Assets/Images/videogen.jpg" alt="AI Video" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Video Generator</h2>
+                <p class="text-muted">
+                    Turn your scripts into videos or enhance visuals with AI-powered tools.
+                    Great for creators, marketers, and educators.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <!-- Feature 3 -->
+        <div class="col-6 feature-card d-flex gap-4">
+            <div>
+                <img src="~/Assets/Images/logogen.jpg" alt="AI Voice" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Logo Generator</h2>
+                <p class="text-muted">
+                    Create natural-sounding voices for narration, videos, and virtual assistants.
+                    Choose from multiple tones and languages.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-6 feature-card d-flex gap-4 flex-row-reverse">
+            <div>
+                <img src="~/Assets/Images/codegen.png" alt="AI Video" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Coding Assistant</h2>
+                <p class="text-muted">
+                    Turn your scripts into videos or enhance visuals with AI-powered tools.
+                    Great for creators, marketers, and educators.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <div class="col-6 feature-card d-flex gap-4">
+            <div>
+                <img src="~/Assets/Images/audioenhancer.jpg" alt="AI Voice" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Audio Enhancer</h2>
+                <p class="text-muted">
+                    Create natural-sounding voices for narration, videos, and virtual assistants.
+                    Choose from multiple tones and languages.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+
+        <!-- Feature 4 -->
+        <div class="col-6 feature-card d-flex gap-4 flex-row-reverse">
+            <div>
+                <img src="~/Assets/Images/imagesenhancer.jpg" alt="AI Video" class="img-fluid feature-img" />
+            </div>
+            <div>
+                <h2 class="fw-bold">AI Image Enhancer</h2>
+                <p class="text-muted">
+                    Turn your scripts into videos or enhance visuals with AI-powered tools.
+                    Great for creators, marketers, and educators.
+                </p>
+                <a href="#" class="btn btn-outline-primary rounded-pill">Use Service</a>
+            </div>
+        </div>
+        <!-- Add more features in same pattern -->
+    </div>
+
+    <!-- Pricing Section -->
+    <div id="pricing" class="py-5 text-center">
+        <h2 class="fw-bold mb-4 section-title">Pricing</h2>
+        <p class="text-muted">Our plans are flexible to scale with your AI usage needs.</p>
+
+        <div class="d-flex justify-content-center mb-4">
+            <button class="btn btn-outline-primary rounded-pill me-2">Monthly</button>
+            <button class="btn btn-outline-secondary rounded-pill">Yearly</button>
+        </div>
+
+        <div class="row g-4 justify-content-center">
+            <!-- Free Plan -->
+            <div class="col-md-3">
+                <div class="card pricing-card shadow-sm p-4 border-0 h-100">
+                    <h4 class="fw-bold">Free</h4>
+                    <p class="text-muted">Lifetime</p>
+                    <ul class="list-unstyled small mb-4">
+                        <li>1 License</li>
+                        <li>10 Download Credits</li>
+                        <li>Custom Branding</li>
+                        <li>24/7 Free Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary rounded-pill">Join Now</a>
+                </div>
+            </div>
+
+            <!-- Standard Plan -->
+            <div class="col-md-3">
+                <div class="card pricing-card shadow-lg p-4 border-primary h-100">
+                    <h4 class="fw-bold text-primary">$39.99</h4>
+                    <p class="text-muted">Monthly</p>
+                    <ul class="list-unstyled small mb-4">
+                        <li>5 Licenses</li>
+                        <li>50 Download Credits</li>
+                        <li>Custom Branding</li>
+                        <li>24/7 Free Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-primary rounded-pill">Join Now</a>
+                </div>
+            </div>
+
+            <!-- Premium Plan -->
+            <div class="col-md-3">
+                <div class="card pricing-card shadow-sm p-4 border-0 h-100">
+                    <h4 class="fw-bold text-success">$99.99</h4>
+                    <p class="text-muted">Monthly</p>
+                    <ul class="list-unstyled small mb-4">
+                        <li>10 Licenses</li>
+                        <li>100 Download Credits</li>
+                        <li>Custom Branding</li>
+                        <li>24/7 Free Support</li>
+                    </ul>
+                    <a href="#" class="btn btn-success rounded-pill">Join Now</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- About Us Section -->
+    <div id="about" class="py-5 text-center">
+        <h2 class="fw-bold section-title">About Us</h2>
+        <p class="text-muted mb-4">
+            At <strong>AiService</strong>, we believe in making AI accessible to everyone.
+            From developers to businesses, our goal is to empower you with intelligent tools that
+            simplify your tasks and supercharge your productivity.
+        </p>
+        <a href="/Home/Aboutus" class="btn btn-outline-primary rounded-pill">Learn More</a>
+    </div>
+
+    <!-- FAQ Section -->
+    <div id="faq" class="py-5">
+        <h2 class="fw-bold text-center mb-4 section-title">Frequently Asked Questions</h2>
+        <div class="accordion" id="faqAccordion">
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="q1">
+                    <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#a1">
+                        What is AiService?
+                    </button>
+                </h2>
+                <div id="a1" class="accordion-collapse collapse show" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        AiService is a platform that provides multiple AI-powered tools including text, code, and image services.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="q2">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a2">
+                        How do I upgrade my plan?
+                    </button>
+                </h2>
+                <div id="a2" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        You can easily upgrade your plan by visiting the Pricing section and selecting the preferred subscription.
+                    </div>
+                </div>
+            </div>
+
+            <div class="accordion-item">
+                <h2 class="accordion-header" id="q3">
+                    <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#a3">
+                        Do you provide support?
+                    </button>
+                </h2>
+                <div id="a3" class="accordion-collapse collapse" data-bs-parent="#faqAccordion">
+                    <div class="accordion-body">
+                        Yes, we provide 24/7 free support for all users regardless of the plan.
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
+
+<style>
+    /* ========== General Styles ========== */
+    .section-title {
+        font-weight: 700;
+        margin-bottom: 1.5rem;
+    }
+
+    /* ========== Feature Section ========== */
+    .feature-card {
+        transition: all 0.3s ease-in-out;
+        border-radius: 12px;
+        padding: 30px 20px;
+    }
+
+        .feature-card:hover {
+            transform: translateY(-8px) scale(1.02);
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+            background-color: #f8f9fa;
+        }
+
+    .feature-img {
+        max-height: 220px;
+        border-radius: 10px;
+        transition: transform 0.3s ease;
+    }
+
+    .feature-card:hover .feature-img {
+        transform: scale(1.05);
+    }
+
+    .feature-text {
+        max-width: 500px;
+    }
+
+    /* ========== Pricing Section ========== */
+    .pricing-card {
+        border-radius: 14px;
+        transition: all 0.3s ease-in-out;
+    }
+
+        .pricing-card:hover {
+            transform: translateY(-10px) scale(1.03);
+            box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
+        }
+
+    /* ========== FAQ Accordion ========== */
+    .accordion-button {
+        font-weight: 600;
+    }
+
+        .accordion-button:not(.collapsed) {
+            background-color: #f0f4ff;
+            color: #0d6efd;
+        }
+</style>
